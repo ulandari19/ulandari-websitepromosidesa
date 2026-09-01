@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Galeri — Desa Sepadu</title>
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+<div class="nav-container">
+
+<a href="index.html"
+class="logo">
+🌿 Desa Sepadu
+</a>
+
+<button class="menu-btn"
+onclick="toggleMenu()">☰</button>
+
+<div class="nav-links"
+id="navLinks">
+
+<a href="index.html">
+🏡 Beranda
+</a>
+
+<a href="tentang.html">
+🌿 Tentang Desa
+</a>
+
+<a href="potensi.html">
+🌾 Potensi Desa
+</a>
+
+<a href="galeri.html"
+class="active">
+📸 Galeri
+</a>
+
+<a href="lokasi.html">
+📍 Lokasi & Kontak
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+
+<header class="page-header">
+
+<div class="container reveal">
+
+<span class="badge">
+📸 GALERI DESA
+</span>
+
+<h1>
+Cerita dari Desa Sepadu
+</h1>
+
+<p>
+Kumpulan visual yang menggambarkan
+suasana dan kehidupan Desa Sepadu.
+</p>
+
+</div>
+
+</header>
+
+
+<section class="section">
+
+<div class="container">
+
+<div class="gallery">
+
+
+<!-- 1 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="kantor-desa.jpeg"
+alt="Kantor Desa Sepadu"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+🏢<br>
+Kantor Desa Sepadu
+</div>
+
+<div class="gallery-caption">
+🏢 Kantor Desa Sepadu
+</div>
+
+</div>
+
+
+<!-- 2 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="jalan-masuk.jpeg"
+alt="Jalan masuk menuju desa"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+🛣️<br>
+Jalan Masuk Desa
+</div>
+
+<div class="gallery-caption">
+🛣️ Jalan masuk menuju desa
+</div>
+
+</div>
+
+
+<!-- 3 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="jalan-persawahan.jpeg"
+alt="Jalan persawahan"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+🌾<br>
+Jalan Persawahan
+</div>
+
+<div class="gallery-caption">
+🌾 Jalan yang melewati persawahan
+</div>
+
+</div>
+
+
+<!-- 4 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="pemandangan-alam.jpeg"
+alt="Pemandangan alam desa"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+🌿<br>
+Pemandangan Alam
+</div>
+
+<div class="gallery-caption">
+🌿 Pemandangan alam desa
+</div>
+
+</div>
+
+
+<!-- 5 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="bunga-desa.jpeg"
+alt="Bunga dan tanaman desa"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+🌸<br>
+Bunga Desa
+</div>
+
+<div class="gallery-caption">
+🌸 Bunga / tanaman desa
+</div>
+
+</div>
+
+
+<!-- 6 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="masjid-desa.jpeg"
+alt="Masjid desa"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+🕌<br>
+Masjid Desa
+</div>
+
+<div class="gallery-caption">
+🕌 Masjid desa
+</div>
+
+</div>
+
+
+<!-- 7 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="sawah.jpeg"
+alt="Sawah Desa Sepadu"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+🌾<br>
+Sawah
+</div>
+
+<div class="gallery-caption">
+🌾 Sawah
+</div>
+
+</div>
+
+
+<!-- 8 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="rumah-desa.jpeg"
+alt="Rumah dan permukiman"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+🏡<br>
+Rumah Desa
+</div>
+
+<div class="gallery-caption">
+🏡 Rumah dan suasana permukiman
+</div>
+
+</div>
+
+
+<!-- 9 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="lingkungan-semayang.jpeg"
+alt="Lingkungan Dusun Semayang"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+🌳<br>
+Lingkungan Semayang
+</div>
+
+<div class="gallery-caption">
+🌳 Lingkungan sekitar Dusun Semayang
+</div>
+
+</div>
+
+
+<!-- 10 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="warga-berkumpul.jpeg"
+alt="Suasana masyarakat"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+👥<br>
+Suasana Masyarakat
+</div>
+
+<div class="gallery-caption">
+👥 Suasana masyarakat
+</div>
+
+</div>
+
+
+<!-- 11 -->
+
+<div class="gallery-item reveal"
+onclick="openLightbox(this)">
+
+<img
+src="tk-desa.jpeg"
+alt="Taman Kanak-Kanak di Desa Sepadu"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+
+<div class="gallery-placeholder">
+🏫<br>
+Taman Kanak-Kanak
+</div>
+
+<div class="gallery-caption">
+🏫 Taman Kanak-Kanak di Desa Sepadu
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- LIGHTBOX -->
+
+<div class="lightbox"
+id="lightbox">
+
+<button
+class="lightbox-close"
+onclick="closeLightbox()">
+×
+</button>
+
+<img
+id="lightboxImage"
+src=""
+alt="">
+
+</div>
+
+
+<footer>
+
+<div class="footer-container">
+
+<div>
+
+<h3>🌿 Desa Sepadu</h3>
+
+<p>
+Bersama menjaga alam, membangun desa,
+dan menciptakan kehidupan yang harmonis.
+</p>
+
+</div>
+
+
+<div>
+
+<h3>Jelajahi</h3>
+
+<a href="index.html">Beranda</a>
+<a href="tentang.html">Tentang Desa</a>
+<a href="potensi.html">Potensi Desa</a>
+<a href="galeri.html">Galeri</a>
+<a href="lokasi.html">Lokasi</a>
+
+</div>
+
+
+<div>
+
+<h3>Media Sosial</h3>
+
+<p>
+Media sosial desa akan ditambahkan di sini.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="copyright">
+© 2026 Desa Sepadu • Harmoni Alam dan Kehidupan
+</div>
+
+</footer>
+
+
+<audio id="music"
+src="background-musik.mpeg"
+loop></audio>
+
+
+<div class="floating-controls">
+
+<button id="topBtn"
+onclick="backToTop()">↑</button>
+
+<button id="musicBtn"
+class="leaf-button"
+onclick="toggleMusic()">🎵</button>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
