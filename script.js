@@ -267,3 +267,50 @@ document.addEventListener(
 
     }
 );
+/* ==========================================
+   GOOGLE SHEETS
+========================================== */
+
+const GOOGLE_SHEET_CSV =
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxYn4u9IOmK3fUSUPNH5LeRiwdhAIK-44AcpdQZTF7e-bpcQ3STaO8NteJmwxKV49gaiCkW2jqblxW/pub?output=csv";
+
+async function loadGoogleSheetData() {
+
+    try {
+
+        const response =
+            await fetch(GOOGLE_SHEET_CSV);
+
+        if (!response.ok) {
+            throw new Error(
+                "Gagal mengambil data Google Sheets"
+            );
+        }
+
+        const csvText =
+            await response.text();
+
+        console.log(
+            "Google Sheets berhasil terhubung!"
+        );
+
+        console.log(
+            "Data:",
+            csvText
+        );
+
+        window.desaSepaduData =
+            csvText;
+
+    } catch (error) {
+
+        console.error(
+            "Google Sheets tidak dapat diakses:",
+            error
+        );
+
+    }
+
+}
+
+loadGoogleSheetData();
