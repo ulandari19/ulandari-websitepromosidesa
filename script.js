@@ -328,28 +328,44 @@ if (aduanForm) {
     aduanForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
-        const submitButton = aduanForm.querySelector("button[type='submit']");
+        const submitButton =
+            aduanForm.querySelector("button[type='submit']");
 
         submitButton.disabled = true;
         submitButton.textContent = "Mengirim...";
 
         const formData = new FormData(aduanForm);
 
+        const data = {
+            nama: formData.get("nama"),
+            kategori: formData.get("kategori"),
+            judul: formData.get("judul"),
+            isi_aduan: formData.get("isi_aduan")
+        };
+
         try {
-            await fetch(ADUAN_SCRIPT_URL, {
+            const response = await fetch(ADUAN_SCRIPT_URL, {
                 method: "POST",
-                body: new URLSearchParams(formData)
+                body: JSON.stringify(data)
             });
 
-            aduanMessage.textContent =
-                "Aduan berhasil dikirim. Terima kasih atas masukannya!";
-            aduanMessage.style.color = "green";
+            const result = await response.json();
 
-            aduanForm.reset();
+            if (result.status === "success") {
+                aduanMessage.textContent =
+                    "Aduan berhasil dikirim. Terima kasih atas masukannya!";
+
+                aduanMessage.style.color = "green";
+
+                aduanForm.reset();
+            } else {
+                throw new Error("Pengiriman gagal");
+            }
 
         } catch (error) {
             aduanMessage.textContent =
                 "Aduan gagal dikirim. Silakan coba lagi.";
+
             aduanMessage.style.color = "red";
 
             console.error("Error:", error);
