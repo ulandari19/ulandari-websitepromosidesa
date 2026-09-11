@@ -314,3 +314,49 @@ async function loadGoogleSheetData() {
 }
 
 loadGoogleSheetData();
+/* ==========================================
+   FORM ADUAN MASYARAKAT
+========================================== */
+
+const ADUAN_SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbxQGTtlA0txwEflQAk2Vi3h_0DBiH1olcjEwlQmdZ-HZQLQUlSy12pbigGKZckxtC3C/exec";
+
+const aduanForm = document.getElementById("aduanForm");
+const aduanMessage = document.getElementById("aduanMessage");
+
+if (aduanForm) {
+    aduanForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const submitButton = aduanForm.querySelector("button[type='submit']");
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Mengirim...";
+
+        const formData = new FormData(aduanForm);
+
+        try {
+            await fetch(ADUAN_SCRIPT_URL, {
+                method: "POST",
+                body: new URLSearchParams(formData)
+            });
+
+            aduanMessage.textContent =
+                "Aduan berhasil dikirim. Terima kasih atas masukannya!";
+            aduanMessage.style.color = "green";
+
+            aduanForm.reset();
+
+        } catch (error) {
+            aduanMessage.textContent =
+                "Aduan gagal dikirim. Silakan coba lagi.";
+            aduanMessage.style.color = "red";
+
+            console.error("Error:", error);
+
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "Kirim Aduan →";
+        }
+    });
+}
