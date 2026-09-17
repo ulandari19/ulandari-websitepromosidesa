@@ -319,7 +319,7 @@ loadGoogleSheetData();
 ========================================== */
 
 const ADUAN_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbxQGTtlA0txwEflQAk2Vi3h_0DBiH1olcjEwlQmdZ-HZQLQUlSy12pbigGKZckxtC3C/exec";
+    "https://script.google.com/macros/s/AKfycbyaEUWP2AjJHV2jFZeaCqpYRF77l6EC0xz2wTS2Wm6NL8_oAXQQWGAUZBUm0Huf_9An/exec";
 
 const aduanForm = document.getElementById("aduanForm");
 const aduanMessage = document.getElementById("aduanMessage");
