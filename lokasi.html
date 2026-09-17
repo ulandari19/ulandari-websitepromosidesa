@@ -264,7 +264,58 @@ Longitude:
 <div class="form-group"><label for="isi_aduan">Isi Aduan</label><textarea id="isi_aduan" name="isi_aduan" rows="5" placeholder="Tuliskan aduan atau saran kamu..." required></textarea></div>
 <button type="submit" class="btn green">Kirim Aduan →</button>
 <p id="aduanMessage"></p>
-</form>
+</form
+
+    <!-- TOKEN PENGADUAN -->
+<div id="aduanTokenBox" class="aduan-card" style="display: none; margin-top: 20px;">
+    <h3>Token Pengaduan Kamu</h3>
+
+    <p>
+        Simpan token ini untuk mengecek status pengaduan kamu.
+    </p>
+
+    <div class="token-box">
+        <strong id="aduanToken"></strong>
+    </div>
+</div>
+
+
+<!-- CEK STATUS PENGADUAN -->
+<div class="aduan-card" style="margin-top: 30px;">
+    <div class="section-heading">
+        <span class="section-label">CEK PENGADUAN</span>
+
+        <h2>Cek Status Aduan</h2>
+
+        <p>
+            Masukkan token pengaduan untuk melihat status dan jawaban dari admin desa.
+        </p>
+    </div>
+
+    <form id="cekAduanForm">
+        <div class="form-group">
+            <label for="cekToken">Token Pengaduan</label>
+
+            <input
+                type="text"
+                id="cekToken"
+                placeholder="Contoh: ADUAN-1720000000000"
+                required
+            >
+        </div>
+
+        <button type="submit" class="btn green">
+            Cek Pengaduan →
+        </button>
+
+        <p id="cekAduanMessage"></p>
+    </form>
+
+    <div
+        id="cekAduanResult"
+        style="display: none; margin-top: 20px;"
+    ></div>
+</div>
 </div>
 </div>
 </section>
