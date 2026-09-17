@@ -27,10 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const navLinks = document.getElementById("navLinks");
 
   if (navLinks) {
-    const menuItems = navLinks.querySelectorAll("a");
-
-    menuItems.forEach(function (item) {
-      item.addEventListener("click", function () {
+    navLinks.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
         navLinks.classList.remove("active");
       });
     });
@@ -99,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
           musicPlaying = true;
         })
         .catch(function () {
-          alert("Musik belum dapat diputar. Silakan klik tombol musik lagi.");
+          alert("Musik belum dapat diputar. Klik tombol musik lagi.");
         });
     }
   });
@@ -285,7 +283,6 @@ function loginAdmin() {
 
   const pin = adminPin.value.trim();
 
-  // PIN ADMIN
   if (pin === "123456") {
     sessionStorage.setItem("desaAdminLogin", "true");
 
@@ -327,7 +324,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (isLoggedIn) {
     adminLogin.style.display = "none";
     adminPanel.style.display = "block";
-
     loadAdminComplaints();
   } else {
     adminLogin.style.display = "block";
@@ -372,12 +368,17 @@ async function loadAdminComplaints() {
     const response = await fetch(API_URL);
     const result = await response.json();
 
-    if (!result.success || !result.data) {
-      complaintList.innerHTML = "Belum ada data aduan.";
-      return;
-    }
+    console.log("Respons Apps Script:", result);
 
-    const complaints = result.data;
+    let complaints = [];
+
+    if (Array.isArray(result)) {
+      complaints = result;
+    } else if (Array.isArray(result.data)) {
+      complaints = result.data;
+    } else if (Array.isArray(result.aduan)) {
+      complaints = result.aduan;
+    }
 
     if (complaints.length === 0) {
       complaintList.innerHTML = "Belum ada aduan masuk.";
@@ -391,51 +392,49 @@ async function loadAdminComplaints() {
 
       complaintCard.className = "complaint-card";
 
-      complaintCard.innerHTML = `
-        <h3>${item.judul || "Tanpa judul"}</h3>
+      const id = item.id || item.token || "";
+      const nama = item.nama || "-";
+      const kategori = item.kategori || "-";
+      const judul = item.judul || "Tanpa judul";
+      const isiAduan = item.isi_aduan || item.isi || "-";
+      const status = item.status || "Menunggu";
+      const jawaban = item.jawaban || "";
 
-        <p><strong>ID:</strong> ${item.id || "-"}</p>
-        <p><strong>Nama:</strong> ${item.nama || "-"}</p>
-        <p><strong>Kategori:</strong> ${item.kategori || "-"}</p>
-        <p><strong>Isi Aduan:</strong> ${
-          item.isi_aduan || "-"
-        }</p>
-        <p><strong>Status:</strong> ${
-          item.status || "Menunggu"
-        }</p>
+      complaintCard.innerHTML = `
+        <h3>${judul}</h3>
+
+        <p><strong>ID/Token:</strong> ${id}</p>
+        <p><strong>Nama:</strong> ${nama}</p>
+        <p><strong>Kategori:</strong> ${kategori}</p>
+        <p><strong>Isi Aduan:</strong> ${isiAduan}</p>
+        <p><strong>Status:</strong> ${status}</p>
         <p><strong>Jawaban:</strong> ${
-          item.jawaban || "Belum ada jawaban"
+          jawaban || "Belum ada jawaban dari admin."
         }</p>
 
         <div class="admin-answer">
-          <select id="status-${item.id}">
+          <select id="status-${id}">
             <option value="Menunggu" ${
-              item.status === "Menunggu" ? "selected" : ""
-            }>
-              Menunggu
-            </option>
+              status === "Menunggu" ? "selected" : ""
+            }>Menunggu</option>
 
             <option value="Diproses" ${
-              item.status === "Diproses" ? "selected" : ""
-            }>
-              Diproses
-            </option>
+              status === "Diproses" ? "selected" : ""
+            }>Diproses</option>
 
             <option value="Selesai" ${
-              item.status === "Selesai" ? "selected" : ""
-            }>
-              Selesai
-            </option>
+              status === "Selesai" ? "selected" : ""
+            }>Selesai</option>
           </select>
 
           <textarea
-            id="answer-${item.id}"
+            id="answer-${id}"
             placeholder="Tulis jawaban admin..."
-          >${item.jawaban || ""}</textarea>
+          >${jawaban}</textarea>
 
           <button
             class="btn green"
-            onclick="answerComplaint('${item.id}')"
+            onclick="answerComplaint('${id}')"
           >
             Simpan Jawaban
           </button>
@@ -446,10 +445,10 @@ async function loadAdminComplaints() {
     });
 
     if (adminStatus) {
-      adminStatus.textContent =
-        "Data aduan berhasil dimuat.";
+      adminStatus.textContent = "Data aduan berhasil dimuat.";
       adminStatus.style.color = "green";
     }
+
   } catch (error) {
     console.error("Error:", error);
 
@@ -479,14 +478,8 @@ function loadComplaints() {
 // =====================================================
 
 async function answerComplaint(id) {
-  const statusInput = document.getElementById(
-    "status-" + id
-  );
-
-  const answerInput = document.getElementById(
-    "answer-" + id
-  );
-
+  const statusInput = document.getElementById("status-" + id);
+  const answerInput = document.getElementById("answer-" + id);
   const adminStatus = document.getElementById("adminStatus");
 
   if (!statusInput || !answerInput) return;
@@ -514,8 +507,7 @@ async function answerComplaint(id) {
 
     if (result.success) {
       if (adminStatus) {
-        adminStatus.textContent =
-          "Jawaban berhasil disimpan.";
+        adminStatus.textContent = "Jawaban berhasil disimpan.";
         adminStatus.style.color = "green";
       }
 
@@ -529,8 +521,7 @@ async function answerComplaint(id) {
     console.error("Error:", error);
 
     if (adminStatus) {
-      adminStatus.textContent =
-        "Jawaban gagal disimpan.";
+      adminStatus.textContent = "Jawaban gagal disimpan.";
       adminStatus.style.color = "red";
     }
   }
