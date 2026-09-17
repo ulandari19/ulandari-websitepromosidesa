@@ -8,16 +8,119 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav class="navbar"><div class="nav-container"><a href="index.html" class="logo"><span>🌿</span> Desa Sepadu</a><button class="menu-btn" onclick="toggleMenu()">☰</button><div class="nav-links" id="navLinks"><a href="index.html">🏡 Beranda</a><a href="tentang.html">🌿 Tentang Desa</a><a href="potensi.html">🌾 Potensi Desa</a><a href="galeri.html">📸 Galeri</a><a href="lokasi.html">📍 Lokasi & Kontak</a><a href="admin.html" class="active">🔐 Admin</a></div></div></nav>
-<header class="page-header"><div class="container reveal"><span class="badge">🔐 PANEL ADMIN</span><h1>Kelola Aduan Masyarakat</h1><p>Lihat aduan yang masuk dan kirim jawaban dari admin desa.</p></div></header>
-<section class="section"><div class="container">
-<div id="adminLogin" class="aduan-card admin-login reveal"><div class="section-heading"><span class="section-label">LOGIN ADMIN</span><h2>Masuk ke panel</h2><p>Gunakan PIN admin untuk membuka data aduan.</p></div><div class="form-group"><label for="adminPin">PIN Admin</label><input id="adminPin" type="password" inputmode="numeric" placeholder="Masukkan PIN"></div><button class="btn green" onclick="loginAdmin()">Masuk →</button><p id="loginMessage"></p></div>
-<div id="adminPanel" style="display:none">
-<div class="admin-toolbar"><div><span class="section-label">DAFTAR ADUAN</span><h2>Aduan masuk</h2></div><button class="btn green" onclick="loadAdminComplaints()">↻ Muat Ulang</button></div>
-<div id="adminStatus" class="admin-status"></div><div id="complaintList" class="complaint-list"></div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <span>🌿</span> Desa Sepadu
+    </a>
+
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">🏡 Beranda</a>
+      <a href="tentang.html">🌿 Tentang Desa</a>
+      <a href="potensi.html">🌾 Potensi Desa</a>
+      <a href="galeri.html">📸 Galeri</a>
+      <a href="lokasi.html">📍 Lokasi & Kontak</a>
+      <a href="admin.html" class="active">🔐 Admin</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="container reveal">
+    <span class="badge">🔐 PANEL ADMIN</span>
+    <h1>Kelola Aduan Masyarakat</h1>
+    <p>Lihat aduan yang masuk dan kirim jawaban dari admin desa.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+
+    <div id="adminLogin" class="aduan-card admin-login reveal">
+      <div class="section-heading">
+        <span class="section-label">LOGIN ADMIN</span>
+        <h2>Masuk ke panel</h2>
+        <p>Gunakan PIN admin untuk membuka data aduan.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="adminPin">PIN Admin</label>
+        <input
+          id="adminPin"
+          type="password"
+          inputmode="numeric"
+          placeholder="Masukkan PIN"
+        >
+      </div>
+
+      <button class="btn green" onclick="loginAdmin()">Masuk →</button>
+      <p id="loginMessage"></p>
+    </div>
+
+    <div id="adminPanel" style="display:none">
+
+      <div class="admin-toolbar">
+        <div>
+          <span class="section-label">DAFTAR ADUAN</span>
+          <h2>Aduan masuk</h2>
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn green" onclick="loadAdminComplaints()">
+            ↻ Muat Ulang
+          </button>
+
+          <button class="btn" onclick="logoutAdmin()">
+            🚪 Logout
+          </button>
+        </div>
+      </div>
+
+      <div id="adminStatus" class="admin-status"></div>
+      <div id="complaintList" class="complaint-list"></div>
+
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-container">
+
+    <div>
+      <h3>🌿 Desa Sepadu</h3>
+      <p>Bersama menjaga alam, membangun desa, dan menciptakan kehidupan yang harmonis.</p>
+    </div>
+
+    <div>
+      <h3>Jelajahi</h3>
+      <a href="index.html">Beranda</a>
+      <a href="tentang.html">Tentang Desa</a>
+      <a href="potensi.html">Potensi Desa</a>
+      <a href="galeri.html">Galeri</a>
+      <a href="lokasi.html">Lokasi & Kontak</a>
+    </div>
+
+    <div>
+      <h3>Admin</h3>
+      <p>Panel pengelolaan aduan masyarakat.</p>
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2026 Desa Sepadu • Harmoni Alam dan Kehidupan
+  </div>
+</footer>
+
+<div class="floating-controls">
+  <button id="topBtn" onclick="backToTop()">↑</button>
 </div>
-</div></section>
-<footer><div class="footer-container"><div><h3>🌿 Desa Sepadu</h3><p>Bersama menjaga alam, membangun desa, dan menciptakan kehidupan yang harmonis.</p></div><div><h3>Jelajahi</h3><a href="index.html">Beranda</a><a href="tentang.html">Tentang Desa</a><a href="potensi.html">Potensi Desa</a><a href="galeri.html">Galeri</a><a href="lokasi.html">Lokasi & Kontak</a></div><div><h3>Admin</h3><p>Panel pengelolaan aduan masyarakat.</p></div></div><div class="copyright">© 2026 Desa Sepadu • Harmoni Alam dan Kehidupan</div></footer>
-<div class="floating-controls"><button id="topBtn" onclick="backToTop()">↑</button></div>
+
 <script src="script.js?v=2"></script>
-</body></html>
+
+</body>
+</html>
