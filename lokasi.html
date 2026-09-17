@@ -282,6 +282,7 @@ Longitude:
 
 <!-- CEK STATUS PENGADUAN -->
 <div class="aduan-card" style="margin-top: 30px;">
+
     <div class="section-heading">
         <span class="section-label">CEK PENGADUAN</span>
 
@@ -292,32 +293,36 @@ Longitude:
         </p>
     </div>
 
-    <form id="cekAduanForm">
+    <form id="statusForm">
+
         <div class="form-group">
-            <label for="cekToken">Token Pengaduan</label>
+
+            <label for="token">
+                Token Pengaduan
+            </label>
 
             <input
                 type="text"
-                id="cekToken"
+                id="token"
                 placeholder="Contoh: ADUAN-1720000000000"
                 required
             >
+
         </div>
 
         <button type="submit" class="btn green">
             Cek Pengaduan →
         </button>
 
-        <p id="cekAduanMessage"></p>
     </form>
 
     <div
-        id="cekAduanResult"
-        style="display: none; margin-top: 20px;"
+        id="statusResult"
+        style="margin-top: 20px;"
     ></div>
+
 </div>
-</div>
-</div>
+        
 </section>
 
 <!-- KATA PENUTUP -->
