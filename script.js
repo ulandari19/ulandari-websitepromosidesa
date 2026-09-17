@@ -318,8 +318,8 @@ loadGoogleSheetData();
    FORM ADUAN MASYARAKAT
 ========================================== */
 
-const ADUAN_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycby6NWDnRcx2SOE0mcCR3Pi8gWwrRxHRt5i14RWdFziNppDfuwJFDrk9p8gjwaG1-muC/exec";
+const GOOGLE_SHEET_CSV =
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxYn4u9IOmK3fUSUPNH5LeRiwdhAIK-44AcpdQZTF7e-bpcQ3STaO8NteJmwxKV49gaiCkW2jqblxW/pub?gid=1958031429&output=csv";
 
 const aduanForm = document.getElementById("aduanForm");
 const aduanMessage = document.getElementById("aduanMessage");
