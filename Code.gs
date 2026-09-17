@@ -4,7 +4,7 @@
 // ke Google Sheets. Sesuaikan nama sheet bila perlu.
 // ================================================
 
-const SHEET_NAME = 'Sheet1';
+const SHEET_NAME = 'aduan';
 
 function getSheet_() {
   return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME) || SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
