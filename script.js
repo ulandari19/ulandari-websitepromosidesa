@@ -2,502 +2,312 @@
 // KONFIGURASI
 // =====================================================
 
-const ADUAN_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbyaEUWP2AjJHV2jFZeaCqpYRF77l6EC0xz2wTS2Wm6NL8_oAXQQWGAUZBUm0Huf_9An/exec";
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbyaEUWP2AjJHV2jFZeaCqpYRF77l6EC0xz2wTS2Wm6NL8_oAXQQWGAUZBUm0Huf_9An/exec";
 
 
 // =====================================================
-// NAVBAR MOBILE
+// MENU NAVBAR
 // =====================================================
 
 function toggleMenu() {
-    const navMenu = document.querySelector(".nav-menu");
+  const navLinks = document.getElementById("navLinks");
 
-    if (navMenu) {
-        navMenu.classList.toggle("active");
-    }
+  if (navLinks) {
+    navLinks.classList.toggle("active");
+  }
 }
 
 
 // =====================================================
-// BACK TO TOP
+// TUTUP MENU SETELAH LINK DIKLIK
 // =====================================================
 
-const backToTop = document.getElementById("backToTop");
+document.addEventListener("DOMContentLoaded", function () {
+  const navLinks = document.getElementById("navLinks");
 
-if (backToTop) {
-    window.addEventListener("scroll", function () {
-        if (window.scrollY > 300) {
-            backToTop.classList.add("show");
-        } else {
-            backToTop.classList.remove("show");
-        }
+  if (navLinks) {
+    const menuItems = navLinks.querySelectorAll("a");
+
+    menuItems.forEach(function (item) {
+      item.addEventListener("click", function () {
+        navLinks.classList.remove("active");
+      });
     });
-
-    backToTop.addEventListener("click", function () {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    });
-}
-
-
-// =====================================================
-// MUSIK
-// =====================================================
-
-const music = document.getElementById("backgroundMusic");
-const musicButton = document.getElementById("musicButton");
-
-if (music && musicButton) {
-    musicButton.addEventListener("click", function () {
-        if (music.paused) {
-            music.play();
-            musicButton.textContent = "⏸";
-        } else {
-            music.pause();
-            musicButton.textContent = "▶";
-        }
-    });
-}
+  }
+});
 
 
 // =====================================================
 // ANIMASI REVEAL
 // =====================================================
 
-const revealElements = document.querySelectorAll(".reveal");
+document.addEventListener("DOMContentLoaded", function () {
+  const revealElements = document.querySelectorAll(".reveal");
 
-const revealObserver = new IntersectionObserver(
-    function (entries) {
-        entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("active");
-            }
+  revealElements.forEach(function (element) {
+    element.classList.add("show");
+  });
+});
+
+
+// =====================================================
+// TOMBOL KEMBALI KE ATAS
+// =====================================================
+
+window.addEventListener("scroll", function () {
+  const topButton = document.getElementById("topBtn");
+
+  if (!topButton) return;
+
+  if (window.scrollY > 300) {
+    topButton.classList.add("show");
+  } else {
+    topButton.classList.remove("show");
+  }
+});
+
+function backToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+// =====================================================
+// MUSIK WEBSITE
+// =====================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+  const music = document.getElementById("music");
+  const musicBtn = document.getElementById("musicBtn");
+
+  if (!music || !musicBtn) return;
+
+  let musicPlaying = false;
+
+  musicBtn.addEventListener("click", function () {
+    if (musicPlaying) {
+      music.pause();
+      musicBtn.textContent = "🔇";
+      musicPlaying = false;
+    } else {
+      music.play()
+        .then(function () {
+          musicBtn.textContent = "🔊";
+          musicPlaying = true;
+        })
+        .catch(function () {
+          alert("Musik belum dapat diputar. Silakan klik tombol musik lagi.");
         });
-    },
-    {
-        threshold: 0.15
     }
-);
-
-revealElements.forEach(function (element) {
-    revealObserver.observe(element);
+  });
 });
-
-
-// =====================================================
-// LIGHTBOX GALERI
-// =====================================================
-
-const galleryImages = document.querySelectorAll(".gallery-item img");
-const lightbox = document.getElementById("lightbox");
-const lightboxImage = document.getElementById("lightboxImage");
-const lightboxClose = document.getElementById("lightboxClose");
-
-galleryImages.forEach(function (image) {
-    image.addEventListener("click", function () {
-        if (lightbox && lightboxImage) {
-            lightboxImage.src = image.src;
-            lightbox.classList.add("active");
-        }
-    });
-});
-
-if (lightboxClose) {
-    lightboxClose.addEventListener("click", function () {
-        lightbox.classList.remove("active");
-    });
-}
-
-if (lightbox) {
-    lightbox.addEventListener("click", function (event) {
-        if (event.target === lightbox) {
-            lightbox.classList.remove("active");
-        }
-    });
-}
 
 
 // =====================================================
 // FORM ADUAN MASYARAKAT
 // =====================================================
 
-const aduanForm = document.getElementById("aduanForm");
-const aduanMessage = document.getElementById("aduanMessage");
+document.addEventListener("DOMContentLoaded", function () {
+  const aduanForm = document.getElementById("aduanForm");
+  const aduanMessage = document.getElementById("aduanMessage");
 
-if (aduanForm) {
-    aduanForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
+  if (!aduanForm) return;
 
-        const nama = document.getElementById("nama").value.trim();
-        const kategori = document.getElementById("kategori").value;
-        const judul = document.getElementById("judul").value.trim();
-        const isiAduan = document.getElementById("isi_aduan").value.trim();
+  aduanForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-        const submitButton = aduanForm.querySelector("button[type='submit']");
+    const submitButton = aduanForm.querySelector(
+      "button[type='submit']"
+    );
 
-        const token = "ADUAN-" + Date.now();
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Mengirim...";
+    }
 
-        if (submitButton) {
-            submitButton.disabled = true;
-            submitButton.textContent = "Mengirim...";
-        }
+    if (aduanMessage) {
+      aduanMessage.textContent = "";
+    }
+
+    const formData = new FormData(aduanForm);
+
+    const data = {
+      action: "submit",
+      nama: formData.get("nama"),
+      kategori: formData.get("kategori"),
+      judul: formData.get("judul"),
+      isi_aduan: formData.get("isi_aduan")
+    };
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        aduanForm.reset();
 
         if (aduanMessage) {
-            aduanMessage.textContent = "Aduan sedang dikirim...";
-            aduanMessage.style.color = "#555";
+          aduanMessage.textContent =
+            "Aduan berhasil dikirim. Simpan token Anda untuk mengecek status aduan.";
+          aduanMessage.style.color = "green";
         }
 
-        try {
-            await fetch(ADUAN_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "text/plain;charset=utf-8"
-                },
-                body: JSON.stringify({
-                    action: "submit",
-                    id: token,
-                    nama: nama,
-                    kategori: kategori,
-                    judul: judul,
-                    isi_aduan: isiAduan
-                })
-            });
-
-            aduanForm.reset();
-
-            if (aduanMessage) {
-                aduanMessage.textContent =
-                    "Aduan berhasil dikirim. Terima kasih sudah menyampaikan laporan.";
-                aduanMessage.style.color = "green";
-            }
-
-            const tokenBox = document.getElementById("aduanTokenBox");
-            const tokenText = document.getElementById("aduanToken");
-
-            if (tokenBox && tokenText) {
-                tokenText.textContent = token;
-                tokenBox.style.display = "block";
-            }
-
-        } catch (error) {
-            console.error("Gagal mengirim aduan:", error);
-
-            if (aduanMessage) {
-                aduanMessage.textContent =
-                    "Aduan gagal dikirim. Silakan coba lagi.";
-                aduanMessage.style.color = "red";
-            }
+        if (result.id) {
+          alert(
+            "Aduan berhasil dikirim.\nToken aduan Anda: " +
+            result.id
+          );
         }
-
-        if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.textContent = "Kirim Aduan";
-        }
-    });
-}
-
-
-// =====================================================
-// CEK STATUS ADUAN DENGAN TOKEN
-// =====================================================
-
-const cekAduanForm = document.getElementById("cekAduanForm");
-const cekAduanMessage = document.getElementById("cekAduanMessage");
-const cekAduanResult = document.getElementById("cekAduanResult");
-
-if (cekAduanForm) {
-    cekAduanForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
-
-        const tokenInput = document.getElementById("cekToken");
-        const token = tokenInput.value.trim();
-
-        const submitButton = cekAduanForm.querySelector(
-            "button[type='submit']"
+      } else {
+        throw new Error(
+          result.message || "Aduan gagal dikirim."
         );
+      }
+    } catch (error) {
+      console.error("Error:", error);
 
-        if (submitButton) {
-            submitButton.disabled = true;
-            submitButton.textContent = "Mengecek...";
+      if (aduanMessage) {
+        aduanMessage.textContent =
+          "Aduan gagal dikirim. Silakan coba lagi.";
+        aduanMessage.style.color = "red";
+      }
+    }
+
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = "Kirim Aduan";
+    }
+  });
+});
+
+
+// =====================================================
+// CEK STATUS ADUAN
+// =====================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+  const statusForm = document.getElementById("statusForm");
+  const statusResult = document.getElementById("statusResult");
+
+  if (!statusForm) return;
+
+  statusForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const tokenInput = document.getElementById("token");
+
+    if (!tokenInput) return;
+
+    const token = tokenInput.value.trim();
+
+    if (!token) {
+      if (statusResult) {
+        statusResult.textContent =
+          "Silakan masukkan token aduan.";
+        statusResult.style.color = "red";
+      }
+
+      return;
+    }
+
+    if (statusResult) {
+      statusResult.textContent = "Memeriksa status...";
+      statusResult.style.color = "#315b45";
+    }
+
+    try {
+      const response = await fetch(
+        API_URL + "?id=" + encodeURIComponent(token)
+      );
+
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        const data = result.data;
+
+        if (statusResult) {
+          statusResult.innerHTML = `
+            <div class="status-card">
+              <p><strong>ID Aduan:</strong> ${data.id || "-"}</p>
+              <p><strong>Nama:</strong> ${data.nama || "-"}</p>
+              <p><strong>Kategori:</strong> ${data.kategori || "-"}</p>
+              <p><strong>Judul:</strong> ${data.judul || "-"}</p>
+              <p><strong>Status:</strong> ${data.status || "Menunggu"}</p>
+              <p><strong>Jawaban:</strong> ${
+                data.jawaban || "Belum ada jawaban dari admin."
+              }</p>
+            </div>
+          `;
+
+          statusResult.style.color = "#24402b";
         }
-
-        if (cekAduanMessage) {
-            cekAduanMessage.textContent = "Sedang mengecek pengaduan...";
-            cekAduanMessage.style.color = "#555";
+      } else {
+        if (statusResult) {
+          statusResult.textContent =
+            "Token tidak ditemukan. Periksa kembali token Anda.";
+          statusResult.style.color = "red";
         }
+      }
+    } catch (error) {
+      console.error("Error:", error);
 
-        if (cekAduanResult) {
-            cekAduanResult.style.display = "none";
-        }
-
-        try {
-            const response = await fetch(ADUAN_SCRIPT_URL);
-            const data = await response.json();
-
-            const aduan = data.find(function (item) {
-                return String(item.id).trim() === token;
-            });
-
-            if (!aduan) {
-                if (cekAduanMessage) {
-                    cekAduanMessage.textContent =
-                        "Token pengaduan tidak ditemukan.";
-                    cekAduanMessage.style.color = "red";
-                }
-
-                return;
-            }
-
-            const status = aduan.status || "Menunggu";
-            const jawaban = aduan.jawaban || "Belum ada jawaban dari admin.";
-
-            if (cekAduanMessage) {
-                cekAduanMessage.textContent =
-                    "Data pengaduan berhasil ditemukan.";
-                cekAduanMessage.style.color = "green";
-            }
-
-            if (cekAduanResult) {
-                cekAduanResult.innerHTML = `
-                    <h3>Hasil Pengaduan</h3>
-                    <p><strong>ID Pengaduan:</strong> ${escapeHTML(aduan.id)}</p>
-                    <p><strong>Nama:</strong> ${escapeHTML(aduan.nama)}</p>
-                    <p><strong>Kategori:</strong> ${escapeHTML(aduan.kategori)}</p>
-                    <p><strong>Judul:</strong> ${escapeHTML(aduan.judul)}</p>
-                    <p><strong>Status:</strong> 
-                        <strong>${escapeHTML(status)}</strong>
-                    </p>
-                    <p><strong>Jawaban Admin:</strong><br>
-                        ${escapeHTML(jawaban)}
-                    </p>
-                `;
-
-                cekAduanResult.style.display = "block";
-            }
-
-        } catch (error) {
-            console.error("Gagal mengecek aduan:", error);
-
-            if (cekAduanMessage) {
-                cekAduanMessage.textContent =
-                    "Terjadi kesalahan saat mengecek pengaduan.";
-                cekAduanMessage.style.color = "red";
-            }
-        }
-
-        if (submitButton) {
-            submitButton.disabled = false;
-            submitButton.textContent = "Cek Pengaduan →";
-        }
-    });
-}
+      if (statusResult) {
+        statusResult.textContent =
+          "Gagal mengecek status. Silakan coba lagi.";
+        statusResult.style.color = "red";
+      }
+    }
+  });
+});
 
 
 // =====================================================
 // LOGIN ADMIN
 // =====================================================
 
-const adminLogin = document.getElementById("adminLogin");
-const adminPanel = document.getElementById("adminPanel");
-const adminLoginForm = document.getElementById("adminLoginForm");
-const adminLoginMessage = document.getElementById("adminLoginMessage");
+function loginAdmin() {
+  const adminLogin = document.getElementById("adminLogin");
+  const adminPanel = document.getElementById("adminPanel");
+  const adminPin = document.getElementById("adminPin");
+  const loginMessage = document.getElementById("loginMessage");
 
-if (adminLoginForm) {
-    adminLoginForm.addEventListener("submit", function (event) {
-        event.preventDefault();
+  if (!adminPin) {
+    console.error("Input adminPin tidak ditemukan.");
+    return;
+  }
 
-        const pinInput = document.getElementById("adminPin");
-        const pin = pinInput.value.trim();
+  const pin = adminPin.value.trim();
 
-        if (pin === "123456") {
-            sessionStorage.setItem("desaAdminLogin", "true");
+  // PIN ADMIN
+  if (pin === "123456") {
+    sessionStorage.setItem("desaAdminLogin", "true");
 
-            if (adminLogin) {
-                adminLogin.style.display = "none";
-            }
-
-            if (adminPanel) {
-                adminPanel.style.display = "block";
-            }
-
-            loadComplaints();
-        } else {
-            if (adminLoginMessage) {
-                adminLoginMessage.textContent = "PIN admin salah.";
-                adminLoginMessage.style.color = "red";
-            }
-        }
-    });
-}
-
-
-// =====================================================
-// LOGOUT ADMIN
-// =====================================================
-
-function logoutAdmin() {
-    sessionStorage.removeItem("desaAdminLogin");
-    window.location.reload();
-}
-
-
-// =====================================================
-// MEMUAT DATA ADUAN ADMIN
-// =====================================================
-
-async function loadComplaints() {
-    const complaintList = document.getElementById("complaintList");
-    const adminStatus = document.getElementById("adminStatus");
-
-    if (!complaintList) {
-        return;
+    if (adminLogin) {
+      adminLogin.style.display = "none";
     }
 
-    complaintList.innerHTML = "Memuat data aduan...";
-
-    try {
-        const response = await fetch(ADUAN_SCRIPT_URL);
-        const data = await response.json();
-
-        if (!data || data.length === 0) {
-            complaintList.innerHTML = "<p>Belum ada aduan.</p>";
-            return;
-        }
-
-        complaintList.innerHTML = "";
-
-        data.forEach(function (item) {
-            const card = document.createElement("div");
-            card.className = "complaint-card";
-
-            card.innerHTML = `
-                <h3>${escapeHTML(item.judul || "Tanpa Judul")}</h3>
-
-                <p>
-                    <strong>ID:</strong>
-                    ${escapeHTML(item.id || "-")}
-                </p>
-
-                <p>
-                    <strong>Nama:</strong>
-                    ${escapeHTML(item.nama || "-")}
-                </p>
-
-                <p>
-                    <strong>Kategori:</strong>
-                    ${escapeHTML(item.kategori || "-")}
-                </p>
-
-                <p>
-                    <strong>Isi Aduan:</strong><br>
-                    ${escapeHTML(item.isi_aduan || "-")}
-                </p>
-
-                <p>
-                    <strong>Status:</strong>
-                    ${escapeHTML(item.status || "Menunggu")}
-                </p>
-
-                <p>
-                    <strong>Jawaban:</strong><br>
-                    ${escapeHTML(item.jawaban || "Belum ada jawaban")}
-                </p>
-
-                <textarea
-                    class="reply-input"
-                    id="reply-${escapeHTML(item.id)}"
-                    placeholder="Tulis jawaban admin..."
-                ></textarea>
-
-                <button
-                    class="btn green"
-                    onclick="sendReply('${escapeJS(item.id)}')"
-                >
-                    Kirim Jawaban
-                </button>
-            `;
-
-            complaintList.appendChild(card);
-        });
-
-        if (adminStatus) {
-            adminStatus.textContent = "Data aduan berhasil dimuat.";
-            adminStatus.style.color = "green";
-        }
-
-    } catch (error) {
-        console.error("Gagal memuat aduan:", error);
-        complaintList.innerHTML =
-            "<p>Gagal memuat data aduan.</p>";
-    }
-}
-
-
-// =====================================================
-// KIRIM JAWABAN ADMIN
-// =====================================================
-
-async function sendReply(id) {
-    const replyInput = document.getElementById("reply-" + id);
-
-    if (!replyInput) {
-        return;
+    if (adminPanel) {
+      adminPanel.style.display = "block";
     }
 
-    const jawaban = replyInput.value.trim();
-
-    if (!jawaban) {
-        alert("Jawaban tidak boleh kosong.");
-        return;
+    if (loginMessage) {
+      loginMessage.textContent = "";
     }
 
-    try {
-        await fetch(ADUAN_SCRIPT_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: {
-                "Content-Type": "text/plain;charset=utf-8"
-            },
-            body: JSON.stringify({
-                action: "answer",
-                id: id,
-                jawaban: jawaban,
-                status: "Selesai"
-            })
-        });
-
-        alert("Jawaban berhasil dikirim.");
-        loadComplaints();
-
-    } catch (error) {
-        console.error("Gagal mengirim jawaban:", error);
-        alert("Jawaban gagal dikirim.");
+    loadAdminComplaints();
+  } else {
+    if (loginMessage) {
+      loginMessage.textContent = "PIN admin salah.";
+      loginMessage.style.color = "red";
     }
-}
-
-
-// =====================================================
-// KEAMANAN TAMPILAN HTML
-// =====================================================
-
-function escapeHTML(value) {
-    return String(value || "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-function escapeJS(value) {
-    return String(value || "")
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'")
-        .replace(/"/g, '\\"');
+  }
 }
 
 
@@ -506,18 +316,222 @@ function escapeJS(value) {
 // =====================================================
 
 document.addEventListener("DOMContentLoaded", function () {
-    const isAdminLoggedIn =
-        sessionStorage.getItem("desaAdminLogin") === "true";
+  const adminLogin = document.getElementById("adminLogin");
+  const adminPanel = document.getElementById("adminPanel");
 
-    const adminLogin = document.getElementById("adminLogin");
-    const adminPanel = document.getElementById("adminPanel");
+  if (!adminLogin || !adminPanel) return;
 
-    if (isAdminLoggedIn && adminPanel) {
-        if (adminLogin) {
-            adminLogin.style.display = "none";
-        }
+  const isLoggedIn =
+    sessionStorage.getItem("desaAdminLogin") === "true";
 
-        adminPanel.style.display = "block";
-        loadComplaints();
-    }
+  if (isLoggedIn) {
+    adminLogin.style.display = "none";
+    adminPanel.style.display = "block";
+
+    loadAdminComplaints();
+  } else {
+    adminLogin.style.display = "block";
+    adminPanel.style.display = "none";
+  }
 });
+
+
+// =====================================================
+// LOGOUT ADMIN
+// =====================================================
+
+function logoutAdmin() {
+  sessionStorage.removeItem("desaAdminLogin");
+
+  const adminLogin = document.getElementById("adminLogin");
+  const adminPanel = document.getElementById("adminPanel");
+
+  if (adminLogin) {
+    adminLogin.style.display = "block";
+  }
+
+  if (adminPanel) {
+    adminPanel.style.display = "none";
+  }
+}
+
+
+// =====================================================
+// MENAMPILKAN DATA ADUAN DI HALAMAN ADMIN
+// =====================================================
+
+async function loadAdminComplaints() {
+  const complaintList = document.getElementById("complaintList");
+  const adminStatus = document.getElementById("adminStatus");
+
+  if (!complaintList) return;
+
+  complaintList.innerHTML = "Memuat data aduan...";
+
+  try {
+    const response = await fetch(API_URL);
+    const result = await response.json();
+
+    if (!result.success || !result.data) {
+      complaintList.innerHTML = "Belum ada data aduan.";
+      return;
+    }
+
+    const complaints = result.data;
+
+    if (complaints.length === 0) {
+      complaintList.innerHTML = "Belum ada aduan masuk.";
+      return;
+    }
+
+    complaintList.innerHTML = "";
+
+    complaints.forEach(function (item) {
+      const complaintCard = document.createElement("div");
+
+      complaintCard.className = "complaint-card";
+
+      complaintCard.innerHTML = `
+        <h3>${item.judul || "Tanpa judul"}</h3>
+
+        <p><strong>ID:</strong> ${item.id || "-"}</p>
+        <p><strong>Nama:</strong> ${item.nama || "-"}</p>
+        <p><strong>Kategori:</strong> ${item.kategori || "-"}</p>
+        <p><strong>Isi Aduan:</strong> ${
+          item.isi_aduan || "-"
+        }</p>
+        <p><strong>Status:</strong> ${
+          item.status || "Menunggu"
+        }</p>
+        <p><strong>Jawaban:</strong> ${
+          item.jawaban || "Belum ada jawaban"
+        }</p>
+
+        <div class="admin-answer">
+          <select id="status-${item.id}">
+            <option value="Menunggu" ${
+              item.status === "Menunggu" ? "selected" : ""
+            }>
+              Menunggu
+            </option>
+
+            <option value="Diproses" ${
+              item.status === "Diproses" ? "selected" : ""
+            }>
+              Diproses
+            </option>
+
+            <option value="Selesai" ${
+              item.status === "Selesai" ? "selected" : ""
+            }>
+              Selesai
+            </option>
+          </select>
+
+          <textarea
+            id="answer-${item.id}"
+            placeholder="Tulis jawaban admin..."
+          >${item.jawaban || ""}</textarea>
+
+          <button
+            class="btn green"
+            onclick="answerComplaint('${item.id}')"
+          >
+            Simpan Jawaban
+          </button>
+        </div>
+      `;
+
+      complaintList.appendChild(complaintCard);
+    });
+
+    if (adminStatus) {
+      adminStatus.textContent =
+        "Data aduan berhasil dimuat.";
+      adminStatus.style.color = "green";
+    }
+  } catch (error) {
+    console.error("Error:", error);
+
+    complaintList.innerHTML =
+      "Gagal memuat data aduan. Periksa koneksi atau Apps Script.";
+
+    if (adminStatus) {
+      adminStatus.textContent =
+        "Terjadi kesalahan saat memuat data.";
+      adminStatus.style.color = "red";
+    }
+  }
+}
+
+
+// =====================================================
+// ALIAS UNTUK FUNGSI LAMA
+// =====================================================
+
+function loadComplaints() {
+  loadAdminComplaints();
+}
+
+
+// =====================================================
+// MENJAWAB ADUAN ADMIN
+// =====================================================
+
+async function answerComplaint(id) {
+  const statusInput = document.getElementById(
+    "status-" + id
+  );
+
+  const answerInput = document.getElementById(
+    "answer-" + id
+  );
+
+  const adminStatus = document.getElementById("adminStatus");
+
+  if (!statusInput || !answerInput) return;
+
+  const status = statusInput.value;
+  const jawaban = answerInput.value.trim();
+
+  if (!jawaban) {
+    alert("Silakan isi jawaban terlebih dahulu.");
+    return;
+  }
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        action: "answer",
+        id: id,
+        status: status,
+        jawaban: jawaban
+      })
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      if (adminStatus) {
+        adminStatus.textContent =
+          "Jawaban berhasil disimpan.";
+        adminStatus.style.color = "green";
+      }
+
+      loadAdminComplaints();
+    } else {
+      throw new Error(
+        result.message || "Jawaban gagal disimpan."
+      );
+    }
+  } catch (error) {
+    console.error("Error:", error);
+
+    if (adminStatus) {
+      adminStatus.textContent =
+        "Jawaban gagal disimpan.";
+      adminStatus.style.color = "red";
+    }
+  }
+}
